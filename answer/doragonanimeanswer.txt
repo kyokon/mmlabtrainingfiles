@@ -16,17 +16,25 @@ public class doragonanime : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		anime = GetComponent<Animator> ();
+		serial = new SerialLib.UnitySerial ("COM8", 9600, 256);
+		serial.ThreadStart ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		s = serial.GetData ();
+		Debug.Log ("value = "+s);
+		if (s == "a") {
+			anime.Play ("wings");
+			Debug.Log ("animePlaying");
+		} else {
+			anime.Play ("Idle");
+		}
 	}
-
 	void OnDestroy()
 	{
-
+		serial.ThreadEnd ();
 	}
 
 
